@@ -6,8 +6,8 @@ clearvars;
 
 % File names for reference and deformed meshes
 files = {
-    'data/Basic2D_Reference.ucd', 'data/Basic2D_Deformed.ucd';
-    'data/Adv2D_Reference.ucd', 'data/Adv2D_Deformed.ucd'
+    '/Users/chickenbone/GitHub/Matlab/data/Basic2D_Reference.ucd', '/Users/chickenbone/GitHub/Matlab/data/Basic2D_Deformed.ucd';
+    '/Users/chickenbone/GitHub/Matlab/data/Adv2D_Reference.ucd', '/Users/chickenbone/GitHub/Matlab/data/Adv2D_Deformed.ucd'
 };
 
 % Loop through each file pair

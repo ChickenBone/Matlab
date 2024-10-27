@@ -1,5 +1,10 @@
 function [nodes, elems] = opfile(file)
-    % open the file 
+    % Check if the file exists
+    if ~isfile(file)
+        error('File does not exist: %s', file);
+    end
+
+    % Open the file
     fid = fopen(file, 'r');
 
     if fid == -1
@@ -8,7 +13,7 @@ function [nodes, elems] = opfile(file)
 
     % Read the header
     header = fgetl(fid);
-    header_data = sscanf(header, '%d %d %*d %*d %*d'); % extract the number of nodes and elemnts using sscanf(first 2)
+    header_data = sscanf(header, '%d %d %*d %*d %*d'); % extract the number of nodes and elements using sscanf (first 2)
     % %d ignores remaining values in header 
     num_nodes = header_data(1); % # of nodes 
     num_elems = header_data(2); % # of elements 
@@ -24,7 +29,7 @@ function [nodes, elems] = opfile(file)
     % Read elements
     elems = zeros(num_elems, 3);
     for i = 1:num_elems
-        datalines = fgetl(fid); % reads each line for elemnts 
+        datalines = fgetl(fid); % reads each line for elements 
         elem_data = sscanf(datalines, '%d %*d %*s %d %d %d'); % extracts node ids
         elems(i, :) = elem_data(2:4)';  % store node IDs
     end
