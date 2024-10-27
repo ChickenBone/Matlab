@@ -1,4 +1,4 @@
-function [nodes, elems] = opfile(file)
+function [nodes, elems] = opfile(file, read3D)
     % Check if the file exists
     if ~isfile(file)
         error('File does not exist: %s', file);
@@ -19,11 +19,20 @@ function [nodes, elems] = opfile(file)
     num_elems = header_data(2); % # of elements 
     
     % Read nodes
-    nodes = zeros(num_nodes, 2);
-    for i = 1:num_nodes
-        datalines = fgetl(fid); % reads each node line by line 
-        node_data = sscanf(datalines, '%d %f %f %*f'); % extracts x and y and ignores z 
-        nodes(i, :) = node_data(2:3);  % Store x and y coordinates
+    if read3D
+        nodes = zeros(num_nodes, 3);
+        for i = 1:num_nodes
+            datalines = fgetl(fid); % reads each node line by line 
+            node_data = sscanf(datalines, '%d %f %f %f'); % extracts x, y, and z
+            nodes(i, :) = node_data(2:4);  % Store x, y, and z coordinates
+        end
+    else
+        nodes = zeros(num_nodes, 2);
+        for i = 1:num_nodes
+            datalines = fgetl(fid); % reads each node line by line 
+            node_data = sscanf(datalines, '%d %f %f %*f'); % extracts x and y and ignores z 
+            nodes(i, :) = node_data(2:3);  % Store x and y coordinates
+        end
     end
     
     % Read elements
